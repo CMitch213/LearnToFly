@@ -16,6 +16,11 @@ public class PenguinStats : ScriptableObject
     public float roundHeight;
     public float maxHeight;
 
+    [Header("UpgradeCost")]
+    public int LaunchCost = 10;
+    public int JetPackCost = 500;
+    public bool hasPack = false;
+
     public void ZeroOutAll()
     {
         money = 0;
@@ -24,5 +29,9 @@ public class PenguinStats : ScriptableObject
         roundDist = 0;
         maxHeight = 0;
         roundHeight = 0;
+
+        LaunchCost = 10;
+        JetPackCost = 500;
+        hasPack = false;
     }
 }
