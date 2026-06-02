@@ -12,7 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89ae67e7fc4dfec46819a19d32aa2095, type: 3}
   m_Name: Peng1
   m_EditorClassIdentifier: 
-  money: 0
-  launchPower: 8
-  maxDist: 0
-  maxHeight: 0
+  money: 224
+  launchPower: 43
+  roundDist: 1981.6041
+  maxDist: 1981.6041
+  roundHeight: 91.66367
+  maxHeight: 91.66367
+  rocketStats: {fileID: 11400000, guid: fac766af53848504184caed7593d8c27, type: 2}
+  LaunchCost: 1280
+  JetPackCost: 500
+  hasPack: 1
+  gasCost: 480

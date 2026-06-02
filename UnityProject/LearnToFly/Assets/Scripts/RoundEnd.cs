@@ -9,6 +9,8 @@ public class RoundEnd : MonoBehaviour
     [Header("Penguin")]
     public PenguinStats peng;
     public Transform pengObj;
+    public GameObject penguin;
+    public Rigidbody2D rb;
     public RocketController rocketCon;
 
     [Header("UI")]
@@ -21,6 +23,9 @@ public class RoundEnd : MonoBehaviour
     {
         peng.roundDist = 0;
         peng.roundHeight = 0;
+        //Assing sum things
+        peng.rb = rb;
+        peng.penguin = penguin;
     }
 
     // Update is called once per frame

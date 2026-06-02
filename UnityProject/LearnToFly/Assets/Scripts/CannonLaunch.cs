@@ -33,6 +33,7 @@ public class CannonLaunch : MonoBehaviour
 
             if(Input.GetKey(KeyCode.Space))
             {
+                launchPower = peng.launchPower;
                 //Launch Penguin
                 rb.AddForce(direction * launchPower, ForceMode2D.Impulse);
 
@@ -43,7 +44,7 @@ public class CannonLaunch : MonoBehaviour
         }
         else
         {
-            rb.gravityScale = 1.0f;
+            rb.gravityScale = peng.gravScale;
         }
     }
 }

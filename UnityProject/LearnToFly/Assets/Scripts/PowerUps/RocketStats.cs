@@ -6,7 +6,14 @@ using UnityEngine;
 public class RocketStats : ScriptableObject
 {
     [Header("Stats")]
-    public int maxGas;
+    public int maxGas = 20;
     public int power;
     public bool doesHave;
+
+    public void ZeroOutAll()
+    {
+        maxGas = 20;
+        power = 1;
+        doesHave = false;
+    }
 }

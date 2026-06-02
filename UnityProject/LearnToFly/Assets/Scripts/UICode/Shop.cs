@@ -7,23 +7,40 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
+    /* 
+     
+    How to add an item to shop
+        - Create UI Item
+        - Create func to call
+        - Add to Update UI
+        - Have a cost in poenguin stats
+     
+     */
+
     [Header("Game Objects")]
     public GameObject shopUI;
     public GameObject roundUI;
     public GameObject jetpack;
     public GameObject jetpackUI;
+    public GameObject feathers;
+    public GameObject feathersUI;
 
     [Header("Penguin")]
     public PenguinStats pengStat;
+    public RocketStats rocketStat;
 
     [Header("Shop Items")]
     public TMP_Text launchCostUI;
+    public TMP_Text gasCostUI;
     public TMP_Text moneyUI;
+    public TMP_Text powerCostUI;
 
     void UpdateUI()
     {
         launchCostUI.text = pengStat.LaunchCost.ToString();
         moneyUI.text = pengStat.money.ToString();
+        gasCostUI.text = pengStat.gasCost.ToString();
+        powerCostUI.text = pengStat.powerCost.ToString();
 
         //See if player has jetpack, if so load image
         if (pengStat.hasPack)
@@ -35,6 +52,19 @@ public class Shop : MonoBehaviour
         { 
             jetpack.SetActive(false); 
             jetpackUI.SetActive(true);
+        }
+        //Check if the player has bought the wings yet
+        if(pengStat.hasWings)
+        {
+            feathers.SetActive(true);
+            feathersUI.SetActive(false);
+            pengStat.rb.gravityScale = pengStat.gravScale;
+        }
+        else
+        {
+            feathers.SetActive(false);
+            feathersUI.SetActive(true);
+            pengStat.rb.gravityScale = pengStat.gravScale;
         }
     }
 
@@ -70,6 +100,46 @@ public class Shop : MonoBehaviour
         {
             pengStat.hasPack = true;
             pengStat.money -= pengStat.JetPackCost;
+            UpdateUI();
+        }
+    }
+
+    public void Gas()
+    {
+        if(pengStat.money >= pengStat.gasCost)
+        {
+            rocketStat.maxGas += 5;
+            pengStat.money -= pengStat.gasCost;
+            //Calculate new cost
+            double newCost = pengStat.gasCost * 2;
+            pengStat.gasCost = (int)Math.Round(newCost);
+            //UpdateUI
+            UpdateUI();
+        }
+    }
+
+    public void Power()
+    {
+        if (pengStat.money >= pengStat.powerCost)
+        {
+            rocketStat.power += 1;
+            pengStat.money -= pengStat.powerCost;
+            //Calculate new cost
+            double newCost = pengStat.powerCost * 2;
+            pengStat.powerCost = (int)Math.Round(newCost);
+            //UpdateUI
+            UpdateUI();
+        }
+    }
+
+    public void BuyWings()
+    {
+        if (pengStat.money >= pengStat.wingsCost && !pengStat.hasWings)
+        {
+            pengStat.hasWings = true;
+            pengStat.money -= pengStat.wingsCost;
+            pengStat.gravScale = 0.7f;
+            pengStat.rb.gravityScale = pengStat.gravScale;
             UpdateUI();
         }
     }
