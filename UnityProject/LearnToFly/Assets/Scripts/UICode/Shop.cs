@@ -144,6 +144,11 @@ public class Shop : MonoBehaviour
         }
     }
 
+    public void Glider()
+    {
+
+    }
+
     public void ResetGame()
     {
         pengStat.ZeroOutAll();
