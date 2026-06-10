@@ -29,6 +29,8 @@ public class PenguinStats : ScriptableObject
     public int powerCost = 1000;
     public int wingsCost = 400;
     public bool hasWings = false;
+    public bool hasGlider = false;
+    public int gliderCost = 2000;
 
     void Start()
     {
@@ -54,5 +56,6 @@ public class PenguinStats : ScriptableObject
         rb.gravityScale = gravScale;
         gravScale = 1;
         rocketStats.ZeroOutAll();
+        hasGlider = false;
     }
 }

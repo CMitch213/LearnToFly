@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 using TMPro;
 
 public class RoundEnd : MonoBehaviour
@@ -18,6 +19,7 @@ public class RoundEnd : MonoBehaviour
     public TMP_Text distUI;
     public TMP_Text heightUI;
     public TMP_Text gasUI;
+    public AudioSource hurt;
 
     private void Start()
     {
@@ -61,6 +63,7 @@ public class RoundEnd : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Finish"))      //If you colide with floor
         {
+            hurt.Play();
             peng.money += ((int)peng.roundDist + (int)peng.roundHeight);  //Add money at end of round (casted as int)
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   //Reset Scene
         }

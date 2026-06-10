@@ -1,37 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Glider : MonoBehaviour
 {
-
-    public float pitchSpeed = 100f;
-    public float liftStrength = 0.5f;
-    public float drag = 0.01f;
-
     public Rigidbody2D rb;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     void FixedUpdate()
     {
-        Vector2 velocity = rb.velocity;
-        float speed = velocity.magnitude;
+        Vector2 vel = rb.velocity;
 
-        Vector2 forward = transform.right;
+        float pitch = transform.right.y; // -1 down, +1 up
 
-        // Lift acts perpendicular to forward direction
-        Vector2 liftDir = new Vector2(-forward.y, forward.x);
+        // Only glide when moving fast enough
+        if (vel.magnitude > 5f)
+        {
+            // How much we're trying to glide
+            float glideAmount = Mathf.Max(0f, pitch);
 
-        float liftAmount = speed * speed * liftStrength;
+            // Reduce falling
+            vel.y += glideAmount * 15f * Time.fixedDeltaTime;
 
-        rb.AddForce(liftDir * liftAmount);
+            // Lose horizontal speed while climbing
+            vel.x *= 1f - glideAmount * 0.01f;
+        }
 
-        // Air resistance
-        rb.AddForce(-velocity * speed * drag);
+        rb.velocity = vel;
     }
 }

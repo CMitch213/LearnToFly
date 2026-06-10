@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using TMPro.EditorUtilities;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Shop : MonoBehaviour
 {
@@ -24,6 +25,12 @@ public class Shop : MonoBehaviour
     public GameObject jetpackUI;
     public GameObject feathers;
     public GameObject feathersUI;
+    public GameObject glider;
+    public GameObject gliderUI;
+
+    [Header("Audio Effects")]
+    public AudioSource powerupSFX;
+    public AudioSource failSFX;
 
     [Header("Penguin")]
     public PenguinStats pengStat;
@@ -66,6 +73,17 @@ public class Shop : MonoBehaviour
             feathersUI.SetActive(true);
             pengStat.rb.gravityScale = pengStat.gravScale;
         }
+        //Check if player bought glider
+        if (pengStat.hasGlider)
+        {
+            glider.SetActive(true);
+            gliderUI.SetActive(false);
+        }
+        else
+        {
+            glider.SetActive(false);
+            gliderUI.SetActive(true);
+        }
     }
 
     void Start()
@@ -90,8 +108,10 @@ public class Shop : MonoBehaviour
             pengStat.LaunchCost = (int)Math.Round(newCost);
             //UpdateUI
             UpdateUI();
+            powerupSFX.Play();
 
         }
+        else { failSFX.Play(); }
     }
 
     public void BuyJetpack()
@@ -101,7 +121,9 @@ public class Shop : MonoBehaviour
             pengStat.hasPack = true;
             pengStat.money -= pengStat.JetPackCost;
             UpdateUI();
+            powerupSFX.Play();
         }
+        else { failSFX.Play(); }
     }
 
     public void Gas()
@@ -115,7 +137,9 @@ public class Shop : MonoBehaviour
             pengStat.gasCost = (int)Math.Round(newCost);
             //UpdateUI
             UpdateUI();
+            powerupSFX.Play();
         }
+        else { failSFX.Play(); }
     }
 
     public void Power()
@@ -129,7 +153,9 @@ public class Shop : MonoBehaviour
             pengStat.powerCost = (int)Math.Round(newCost);
             //UpdateUI
             UpdateUI();
+            powerupSFX.Play();
         }
+        else { failSFX.Play(); }
     }
 
     public void BuyWings()
@@ -141,17 +167,27 @@ public class Shop : MonoBehaviour
             pengStat.gravScale = 0.7f;
             pengStat.rb.gravityScale = pengStat.gravScale;
             UpdateUI();
+            powerupSFX.Play();
         }
+        else { failSFX.Play(); }
     }
 
     public void Glider()
     {
-
+        if (pengStat.money >= pengStat.gliderCost && !pengStat.hasGlider)
+        {
+            pengStat.hasGlider = true;
+            pengStat.money -= pengStat.gliderCost;
+            UpdateUI() ;
+            powerupSFX.Play();
+        }
+        else { failSFX.Play(); }
     }
 
     public void ResetGame()
     {
         pengStat.ZeroOutAll();
         UpdateUI();
+        powerupSFX.Play();
     }
 }
